@@ -32,11 +32,18 @@ const introItem = {
   }
 };
 
-const skillChips = ["MERN Stack", "React", "Node.js", "MongoDB"];
+const skillChips = [
+  "React",
+  "Node.js",
+  "Authentication",
+  "REST APIs",
+  "MongoDB",
+  "PostgreSQL",
+];
 
 function Hero() {
   const roles = [
-    "Full Stack Developer",
+    "Full Stack Web Developer",
     "Frontend Developer",
     "MERN Stack Developer",
     "Final Year CSE Student"
