@@ -1,9 +1,19 @@
 import { motion } from "motion/react";
 import { useState } from "react";
-import { ArrowUpRight, ExternalLink, Github, Sparkles, Zap } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Github, Pin, Sparkles, Zap } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
  
 const projects = [
+  {
+    title: "AI Code Review System",
+    description: "A web app that reviews submitted code by combining ESLint static analysis with Gemini LLM feedback. Flags bugs, security, performance and quality issues, scores each aspect, and keeps review history per project. Secured with JWT auth and built with React, Express, PostgreSQL and Prisma.",
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1080&q=80",
+    tags: ["React", "Node.js", "Express", "PostgreSQL", "Prisma", "Gemini AI"],
+    category: "Full Stack",
+    pinned: true,
+    github: "https://github.com/sandhir-ishita/code-review-ai",
+    demo: "https://github.com/sandhir-ishita/code-review-ai",
+  },
   {
     title: "Cafe Finder",
     description: "A full-stack cafe discovery app to search and explore cafes nearby. Built with React, Node.js, Express, and MongoDB with map integration and filtering by amenities.",
@@ -48,10 +58,13 @@ const item = {
  
 function Projects() {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const filteredProjects =
+  const filteredProjects = (
     selectedCategory === "All"
       ? projects
-      : projects.filter((p) => p.category === selectedCategory);
+      : projects.filter((p) => p.category === selectedCategory)
+  )
+    .slice()
+    .sort((a, b) => Number(!!b.pinned) - Number(!!a.pinned));
  
   return (
     <section id="projects" className="relative overflow-hidden py-20 px-4 sm:px-6 lg:px-8 bg-secondary/30">
@@ -129,8 +142,14 @@ function Projects() {
               key={index}
               variants={item}
               whileHover={{ y: -12, rotateX: 2 }}
-              className="bg-card rounded-xl overflow-hidden border border-border hover:border-[#d7b46a]/60 hover:shadow-lg hover:shadow-[#12304a]/20 transition-all group"
+              className={`relative bg-card rounded-xl overflow-hidden border ${project.pinned ? "border-[#d7b46a]/70 ring-1 ring-[#d7b46a]/30" : "border-border"} hover:border-[#d7b46a]/60 hover:shadow-lg hover:shadow-[#12304a]/20 transition-all group`}
             >
+              {project.pinned && (
+                <div className="absolute left-3 top-3 z-10 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-[#12304a] to-[#d7b46a] px-3 py-1 text-xs text-white shadow-md">
+                  <Pin className="h-3 w-3" />
+                  Pinned
+                </div>
+              )}
               <div className="relative h-48 overflow-hidden">
                 <ImageWithFallback
                   src={project.image}
